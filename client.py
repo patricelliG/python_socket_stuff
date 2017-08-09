@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 
 """
+client.py
+
 This program is a simple demo of a server client program using sockets in
 python3. This particular program does not use a new connection for each
 piece of data being sent. Rather, it keeps one connection up for the
 duration of the transfer.
 """
 
+import binascii
 import time
 import base64
 import socket
@@ -30,11 +33,14 @@ for i in range(1000):
     """ This is dummy data, here we use the time of day.
     """
     data = time.asctime()
+    print('sending: {}'.format(data))
 
     """ Before sending it out, it needs to be encoded to prevent it getting
-    trunked by anyone in transit.
+    trunked by anyone in transit. We also append a \n so that the server
+    can use this to know when to when one payload ends and another begins.
     """
     encoded_data = base64.b64encode(data.encode('UTF-8'))
+    encoded_data += binascii.unhexlify('0a')
 
     """ Now we send the data over the socket we opened earlier. """
     try:
