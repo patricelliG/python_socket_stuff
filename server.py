@@ -35,7 +35,6 @@ print('connected to host: {} on port: {}'.format(conn.getpeername()[0], addr[1])
 """ We have a connection, now read until the \n, decode and print it.
 """
 delimiter = binascii.unhexlify('a0')
-finished = False
 encoded_data = bytearray()
 while True:
     b = conn.recv(1)
